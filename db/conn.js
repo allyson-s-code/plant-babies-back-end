@@ -9,13 +9,20 @@ var _db;
 
 module.exports = {
   connectToServer: function (callback) {
-    client.connect(function (err, db) {
-      // Verify we got a good "db" object
+    client.connect((err) => {
+      if (err) {
+        console.error(err);
+        return false;
+      }
+      // connection to mongo is successful, listen for requests
+      app.listen(Db, () => {
+        console.log("listening for requests");
+      });
+
       if (db) {
         _db = db.db("plant-babies-data");
         console.log("Successfully connected to MongoDB.");
       }
-      return callback(err);
     });
   },
 
