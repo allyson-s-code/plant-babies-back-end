@@ -9,14 +9,14 @@ app.use(require("./routes/record.js"));
 // get driver connection
 const dbo = require("./db/conn");
 
-app.listen(port, () => {
-  // perform a database connection when server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-  });
-  console.log(`Server is running on port: ${port}`);
-});
+dbo.connectToServer(function (err) {
+  // perform a database connection when server starts, quit without calling app.listen if connection error
+  if (err) {
+    console.error(err);
+    return false;
+  }
 
-app.get("/", (req, res) => {
-  res.send("Home sweet home 🏚");
+  app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
+  });
 });
