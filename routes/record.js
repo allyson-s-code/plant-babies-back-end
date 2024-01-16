@@ -105,13 +105,13 @@ plantRoutes.route("/:id/edit").post(function (req, response) {
       feedDate: req.body.feedDate,
     },
   };
-
+  
   db_connect
     .collection("plants")
     .updateOne(myquery, newvalues, function (err, res) {
       if (err) throw err;
       console.log("1 document updated");
-
+      
       response.json(res);
     });
 });
